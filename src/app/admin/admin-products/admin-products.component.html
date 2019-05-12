@@ -1,1 +1,18 @@
-<a routerLink="/admin/products/new" class="btn vtb-primary">New Product</a>
+<div class="row">
+    <div class="col-md-9" *ngIf="products$">
+
+        <div class="card" style="width: 18rem;" *ngFor="let product of (products$|async) ">
+            <img [src]="product.imageUrl" class="card-img-top" alt="Error loading image">
+            <div class="card-body">
+                <h5 class="card-title">{{product.title}}</h5>
+                <p class="card-text">{{product.price}}</p>
+                <a class="btn btn-primary" [routerLink]="['/admin/products',product.price]">Edit</a>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-3">
+        <button routerLink="/admin/products/new" class="btn btn-primary">New Product</button>
+    </div>
+
+</div>

@@ -24,6 +24,7 @@ import { UserService } from './user.service';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { CategoryService } from './category.service';
 import { ProductService } from './product.service';
+import { CustomFormsModule } from 'ng5-validation'
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ProductService } from './product.service';
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    CustomFormsModule
 
   ],
   providers: [AngularFireDatabase, AngularFireAuth, AuthService, AuthGuardService, UserService, CategoryService

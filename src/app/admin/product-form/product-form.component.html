@@ -1,33 +1,60 @@
-<form #f="ngForm" (ngSubmit)="save(f.value)">
-  <div class="form-group">
-    <label for="title">Title</label>
-    <input #titleinput="ngModel" id="title" name="title" type="text" class="form-control" [(ngModel)]="title" required>
-    <div class="alert alert-danger" *ngIf="titleinput.touched && titleinput.invalid">
-      Title is required
-    </div>
+<div class="row">
+  <div class="col-md-6">
+    <form #f="ngForm" (ngSubmit)="save(f.value)">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input #titleinput="ngModel" id="title" name="title" type="text" class="form-control"
+          [(ngModel)]="product.title" required>
+        <div class="alert alert-danger" *ngIf="titleinput.touched && titleinput.invalid">
+          Title is required
+        </div>
+      </div>
+      <div class="from-group">
+        <label for="price">Price</label>
+        <div class="input-group">
+          <span class="input-group-addon">$</span>
+          <input id="price" #priceInput="ngModel" type="number" name="price" class="form-control"
+            [(ngModel)]="product.price" required [min]="10">
+        </div>
+        <div class="alert alert-danger" *ngIf="priceInput.touched && priceInput.invalid">
+          <div class="alert alert-danger" *ngIf="priceInput.errors.required">Price is required</div>
+          <div class="alert alert-danger" *ngIf="priceInput.errors.min">Price should be 10 or Higher</div>
+        </div>
+
+      </div>
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select id="category" #categoryInput="ngModel" name="category" class="form-control"
+          [(ngModel)]="product.category" required>
+          <option *ngFor="let c of categories$|async" [value]="c.name">{{c.name}}</option>
+        </select>
+        <div class="alert alert-danger" *ngIf="categoryInput.touched && categoryInput.invalid">Categoty is required
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="ImageUrl">ImageUrl</label>
+        <input id="ImageUrl" #imageInput="ngModel" type="text" name="imageUrl" class="form-control"
+          [(ngModel)]="product.imageUrl" required url>
+        <div class="alert alert-danger" *ngIf="imageInput.touched && imageInput.invalid">
+          <div class="alert alert-danger" *ngIf="imageInput.errors.required">Image Url is required</div>
+          <div class="alert alert-danger" *ngIf="imageInput.errors.url">Please enter a valid url</div>
+        </div>
+      </div>
+      <button class="btn btn-primary">Save</button>
+    </form>
   </div>
-  <div class="from-group">
-    <label for="price">Price</label>
-    <div class="input-group">
-      <span class="input-group-addon">$</span>
-      <input id="price" #priceInput="ngModel" type="number" name="price" class="form-control" [(ngModel)]="price"
-        required>
+  <div class="col-md-6">
+    <div class="card" style="width: 18rem;">
+      <img [src]="product.imageUrl" *ngIf="product.imageUrl" class="card-img-top">
+      <div class=" card-body">
+        <h5 class="card-title">{{product.title}}</h5>
+        <p class="card-text">
+          {{product.price|currency:'USD'}}
+        </p>
+
+      </div>
     </div>
-    <div class="alert alert-danger" *ngIf="priceInput.touched && priceInput.invalid">Price is required</div>
 
   </div>
-  <div class="form-group">
-    <label for="category">Category</label>
-    <select id="category" #categoryInput="ngModel" name="category" class="form-control" [(ngModel)]="category" required>
-      <option *ngFor="let c of categories$|async" [value]="c.name">{{c.name}}</option>
-    </select>
-    <div class="alert alert-danger" *ngIf="categoryInput.touched && categoryInput.invalid">Categoty is required</div>
-  </div>
-  <div class="form-group">
-    <label for="ImageUrl">ImageUrl</label>
-    <input id="ImageUrl" #imageInput="ngModel" type="text" name="imageUrl" class="form-control" [(ngModel)]="imageUrl"
-      required>
-    <div class="alert alert-danger" *ngIf="imageInput.touched && imageInput.invalid">Image Url is required</div>
-  </div>
-  <button class="btn btn-primary">Save</button>
-</form>
+
+</div>
